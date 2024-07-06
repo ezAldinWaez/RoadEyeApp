@@ -53,7 +53,7 @@ ROOT_URLCONF = 'backendapp.urls'
 
 TEMPLATES = [
     {
-        'backendapp': 'django.template.backendapps.django.DjangoTemplates',
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -75,12 +75,8 @@ WSGI_APPLICATION = 'backendapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backendapps.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-        'USER': 'muusername',
-        'PASSWORD': 'mypassword',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
     }
 }
 
