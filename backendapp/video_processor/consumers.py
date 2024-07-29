@@ -1,12 +1,13 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from asgiref.sync import sync_to_async
-from .models import Video
+import logging
 
+logger = logging.getLogger(__name__)
 
 class VideoProcessingConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.task_id = self.scope['url_route']['kwargs']['task_id']
+        logger.debug(f"Attempting to connect with task_id: {self.task_id}")
         self.group_name = f'video_{self.task_id}'
 
         # Join room group

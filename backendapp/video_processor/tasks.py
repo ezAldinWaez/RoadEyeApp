@@ -1,5 +1,4 @@
 import json
-import os
 from celery import shared_task
 from .models import Video
 from django.utils import timezone
@@ -45,9 +44,20 @@ def process_video(self, file_path, video_id):
         video.resolution = info.get('resolution')
         video.format = info.get('format')
         video.processed_at = timezone.now()
-        video.file.name = output_path
+        video.file.name = output_path.rsplit('/', 1)[-1]
         video.save()
-        
+
+        async_to_sync(channel_layer.group_send)(
+            f'video_{video.task_id}',
+            {
+                'type': 'processing_update',
+                'message': {
+                    'progress': 100,
+                    'details': 'Processing complete',
+                    'video_url': f'http://localhost:8000/media/videos/{video.file.name}'
+                }
+            }
+        )
         return {'details': 'Video processing completed', 'progress': 100}
     except Video.DoesNotExist:
         return {'details': 'Video not found'}
