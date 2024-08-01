@@ -1,0 +1,36 @@
+.fresult-section {  
+    padding: 50px 20px;  
+    text-align: center;  
+}  
+
+.fresult-section h2 {  
+    color: var(--main-color); /* Primary color for headings */  
+    margin-bottom: 30px;  
+    font-size: 2.5em;  
+}  
+
+.statistics {  
+    display: flex;  
+    justify-content: space-around; /* Space items evenly */  
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */  
+}  
+
+.stat-item {  
+    background-color: var(--third-color);
+    border-radius: 5px;
+    padding: 20px;  
+    margin: 10px;  
+    width: 250px;
+    min-height: 150px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}  
+
+.stat-item h3 {  
+    color: #007bff; /* Consistent heading color */  
+    font-size: 1.5em;  
+}  
+
+.stat-item p {  
+    color: #495057; /* Darker text for readability */  
+    font-size: 1.2em;  
+}

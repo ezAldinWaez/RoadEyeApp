@@ -1,40 +1,39 @@
-import React, { useState } from 'react';
-import { Container, Paper, Typography } from '@mui/material';
-import VideoUpload from './components/VideoUpload';
-import ProcessingStatus from './components/ProcessingStatus';
-import VideoPlayer from './components/VideoPlayer';
+import React from 'react';   
+import './App.css';  
+import {   
+    Chart1,   
+    Chart2,   
+    Uploadf,   
+    Header,   
+    Footer,   
+    FSection,   
+    SSection,   
+    About,   
+    Contact,   
+    FResultSection   
+    // SResultSection, // Uncomment if needed   
+} from './components'; 
 
 function App() {
-  const [taskId, setTaskId] = useState(null);
-  const [videoUrl, setVideoUrl] = useState(null);
-
-  const handleUploadSuccess = (newTaskId) => {
-    console.log('Upload success, taskId:', newTaskId);
-    setTaskId(newTaskId);
-    setVideoUrl(null);
-  };
-
-  const handleProcessingComplete = (url) => {
-    console.log('Processing complete, video URL:', url);
-    setVideoUrl(url);
-  };
-
   return (
-    <Container maxWidth="md">
-      <Paper elevation={3} style={{ padding: '2rem', marginTop: '2rem' }}>
-        <Typography variant="h4" gutterBottom>
-          Video Processor
-        </Typography>
-        <VideoUpload onUploadSuccess={handleUploadSuccess} />
-        {taskId && !videoUrl && (
-          <ProcessingStatus 
-            taskId={taskId} 
-            onProcessingComplete={handleProcessingComplete} 
-          />
-        )}
-        {videoUrl && <VideoPlayer videoUrl={videoUrl} />}
-      </Paper>
-    </Container>
+    <div className="App">
+      <Header/>
+      <FSection/>
+      <div style={{width: '90%', margin: '0 auto'}}>
+        <SSection/>
+        <Uploadf/>
+        <div className='Charts_section' style={{padding: '50px 20px', }}>
+          <Chart1></Chart1>
+          <Chart1></Chart1>
+          <Chart1></Chart1>
+          <Chart2></Chart2>
+        </div>
+        <FResultSection/>
+        <About/>
+        <Contact/>
+      </div>
+      <Footer/>
+    </div>
   );
 }
 
