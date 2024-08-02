@@ -53,38 +53,34 @@ class VideoUploadView(APIView):
 
 class ProcessingStatusView(APIView):
     def get(self, request, task_id):
-        try:
-            video = Video.objects.get(task_id=task_id)
-            task = AsyncResult(task_id)
-            
-            if task.state == 'PENDING':
-                response = {
-                    'state': 'Pending',
-                    'details': 'Video processing is queued.',
-                    'progress': 0
-                }
-            elif task.state == 'PROGRESS':
-                response = {
-                    'state': 'Processing',
-                    'details': task.info.get('details', ''),
-                    'progress': task.info.get('progress', 0)
-                }
-            elif task.state == 'SUCCESS':
-                response = {
-                    'state': 'Completed',
-                    'details': 'Video processing is complete.',
-                    'progress': 100
-                }
-            else:
-                response = {
-                    'state': 'Error',
-                    'details': str(task.info),
-                    'progress': 0
-                }
-            
-            return Response(response)
-        except Video.DoesNotExist:
-            return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
+        task = AsyncResult(task_id)
+        
+        if task.state == 'PENDING':
+            response = {
+                'state': 'Pending',
+                'details': 'Video processing is queued.',
+                'progress': 0
+            }
+        elif task.state == 'PROGRESS':
+            response = {
+                'state': 'Processing',
+                'details': task.info.get('details', ''),
+                'progress': task.info.get('progress', 0)
+            }
+        elif task.state == 'SUCCESS':
+            response = {
+                'state': 'Completed',
+                'details': 'Video processing is complete.',
+                'progress': 100
+            }
+        else:
+            response = {
+                'state': 'Error',
+                'details': str(task.info),
+                'progress': 0
+            }
+        
+        return Response(response)
 
 
 class ResultView(APIView):

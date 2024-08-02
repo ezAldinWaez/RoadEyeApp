@@ -1,3 +1,4 @@
-./env
+.env
+.conda
 Pipfile
 Pipfile.lock
