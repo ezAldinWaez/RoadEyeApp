@@ -1,0 +1,16 @@
+.sresult-section {  
+    background-color: #ffffff; /* White background for clarity */  
+    padding: 50px 20px;  
+    text-align: center;  
+}  
+
+.sresult-section h2 {  
+    color: #007bff; /* Primary color for headings */  
+    margin-bottom: 30px;  
+    font-size: 2.5em;  
+}  
+
+.chart-container {  
+    max-width: 800px; /* Limit width for better readability */  
+    margin: 0 auto; /* Center the chart */  
+}

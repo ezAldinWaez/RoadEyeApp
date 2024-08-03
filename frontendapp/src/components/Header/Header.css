@@ -1,0 +1,35 @@
+/* Header.css */  
+.header {  
+    background-color: var(--third-color);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    padding: 8px 3em;
+}  
+
+.logo img {
+    width: 60px;
+    border-radius: 50%;
+}
+
+.nav ul {  
+    list-style: none;  
+    display: flex;  
+    gap: 5px;  
+    margin: 0;  
+    padding: 0;  
+}  
+
+.nav a {  
+    text-decoration: none;  
+    padding: 8px 16px;  
+    transition: 0.3s;  
+}  
+
+.nav a:hover {  
+    background-color: var(--main-color);
+    border-radius: 4px;  
+    color: white;
+}
