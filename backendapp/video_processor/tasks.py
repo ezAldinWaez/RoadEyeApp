@@ -40,10 +40,11 @@ def process_video(self, file_path: str, video_id):
     count = 0
     while capture.isOpened():
         count += 1
+
         statistics = {
-            "frame": [], "track_id": [], "timestamp": [],
-            "x": [], "y": [], "w": [], "h": [], "conf": [],
-            "speed": [], "acceleration": [], "direction": []
+            "frame_num": int(count),
+            "time_in_video": float(count / capFps),
+            "objects": []
         }
 
         success, frame = capture.read()
@@ -90,8 +91,6 @@ def process_video(self, file_path: str, video_id):
                     (np.abs(detections[:, :4] - [x, y, w, h]) < 1).all(axis=1))[0]
                 confidence = detections[detection_idx,
                                         4][0] if detection_idx.size > 0 else 0
-                timestamp = count / capFps
-
                 # Draw the object frame
                 cv.rectangle(
                     img=roi,
@@ -134,19 +133,20 @@ def process_video(self, file_path: str, video_id):
                     pt2=speed_v,
                     color=(0, 0, 0),
                     thickness=2)
-
+                
                 # Save the statistics
-                statistics["frame"].append(count)
-                statistics["track_id"].append(track_id)
-                statistics["x"].append(x)
-                statistics["y"].append(y)
-                statistics["w"].append(w)
-                statistics["h"].append(h)
-                statistics["speed"].append(speed)
-                statistics["acceleration"].append(acceleration)
-                statistics["direction"].append(direction)
-                statistics["conf"].append(confidence)
-                statistics["timestamp"].append(timestamp)
+                statistics["objects"].append({
+                    "id": int(track_id),
+                    "cntr_x": int(x),
+                    "cntr_y": int(y),
+                    "width": int(w),
+                    "hight": int(h),
+                    "conf": float(confidence),
+                    "speed": float(speed),
+                    "speed_angle": float(direction),
+                    "accel": float(abs(acceleration)),
+                    "accel_angle": float(direction) if acceleration > 0 else float(direction + 180),
+                    })
 
         writer.write(frame)
 
