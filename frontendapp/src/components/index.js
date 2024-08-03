@@ -1,5 +1,3 @@
-// components/index.js  
-
 export { default as Chart1 } from './Chart1/Chart1';  
 export { default as Chart2 } from './Chart2/Chart2';  
 export { default as Uploadf } from './Uploadf/Uploadf';  

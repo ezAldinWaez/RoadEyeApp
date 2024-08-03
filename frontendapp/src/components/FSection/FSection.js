@@ -18,7 +18,7 @@ function FSection() {
                 loop   
                 muted   
                 className='FSection-video'   
-                src={'/images/video.mp4'}   
+                src={'/assets/video.mp4'}   
             />  
             <div className='text'>
                 <h1>Car Detection Made Easy</h1>

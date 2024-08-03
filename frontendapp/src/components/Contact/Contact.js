@@ -41,7 +41,7 @@ const ContactSection = () => {
         <section className="contact-section" id="contact">  
             <h2>Contact Us</h2>  
             <div className='content'>
-                <img src={'/images/contact.webp'} alt='contact'/>
+                <img src={'/assets/contact.webp'} alt='contact'/>
                 <form onSubmit={handleSubmit}>  
                     <input  
                         type="text"  
