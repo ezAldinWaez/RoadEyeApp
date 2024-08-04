@@ -1,9 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { LinearProgress, Typography } from '@mui/material';
-import { Chart1, Chart2 } from '..'
+import React, { useEffect, useState, useCallback } from "react";
+import { LinearProgress, Typography } from "@mui/material";
+import { Chart1 } from "..";
 
 const ProcessingSection = ({ taskId, onProcessingComplete }) => {
-  const [status, setStatus] = useState({ progress: 0, details: 'Initializing...' });
+  const [status, setStatus] = useState({
+    progress: 0,
+    details: "Initializing...",
+  });
+  const [array, setArray] = useState([]);
+
+  // Ensure onProcessingComplete is stable
+  const handleProcessingComplete = useCallback(
+    (url) => {
+      onProcessingComplete(url);
+    },
+    [onProcessingComplete]
+  );
 
   useEffect(() => {
     let socket;
@@ -11,40 +23,53 @@ const ProcessingSection = ({ taskId, onProcessingComplete }) => {
     const maxRetries = 5;
 
     const connectWebSocket = () => {
-      console.log('Attempting to connect WebSocket for taskId:', taskId);
+      console.log("Attempting to connect WebSocket for taskId:", taskId);
       socket = new WebSocket(`ws://localhost:8000/ws/video/${taskId}/`);
 
       socket.onopen = () => {
-        console.log('WebSocket connected successfully');
+        console.log("WebSocket connected successfully");
         retryCount = 0;
       };
 
       socket.onerror = (error) => {
-        console.error('WebSocket error:', error);
+        console.error("WebSocket error:", error);
         if (retryCount < maxRetries) {
           retryCount++;
           console.log(`Retrying connection (${retryCount}/${maxRetries})...`);
-          setTimeout(connectWebSocket, 3000);
+          setTimeout(connectWebSocket, 1000);
         }
       };
 
       socket.onclose = (event) => {
-        console.log('WebSocket closed:', event);
+        console.log("WebSocket closed:", event);
         if (!event.wasClean && retryCount < maxRetries) {
           retryCount++;
-          console.log(`Connection closed. Retrying (${retryCount}/${maxRetries})...`);
-          setTimeout(connectWebSocket, 3000);
+          console.log(
+            `Connection closed. Retrying (${retryCount}/${maxRetries})...`
+          );
+          setTimeout(connectWebSocket, 1000);
         }
       };
 
       socket.onmessage = (event) => {
-        console.log('Received WebSocket message:', event.data);
+        console.log("Received WebSocket message:", event.data);
         const data = JSON.parse(event.data);
         setStatus(data.message);
 
+        let willAppend = true;
+        for (let i = 0; i < array.length; i++)                                                                      
+          if (data.message.video_url || array[i].frame_num === data.message.details.frame_num) {
+            willAppend = false;
+            break;
+          }
+        if (willAppend) array.push(data.message.details);
+
         if (data.message.progress === 100 && data.message.video_url) {
-          console.log('Processing complete, calling onProcessingComplete with URL:', data.message.video_url);
-          onProcessingComplete(data.message.video_url);
+          console.log(
+            "Processing complete, calling onProcessingComplete with URL:",
+            data.message.video_url
+          );
+          handleProcessingComplete(data.message.video_url);
         }
       };
     };
@@ -52,26 +77,22 @@ const ProcessingSection = ({ taskId, onProcessingComplete }) => {
     connectWebSocket();
 
     return () => {
-      console.log('Closing WebSocket');
+      console.log("Closing WebSocket");
       if (socket) {
         socket.close();
       }
     };
-  }, [taskId, onProcessingComplete]);
+  }, [taskId, handleProcessingComplete]);
+
+  console.log(array);
 
   return (
     <div>
       <Typography variant="h6">Processing Video</Typography>
       <LinearProgress variant="determinate" value={status.progress} />
-      <Typography>{status.details}</Typography>
-
-      <div className="Charts_section" style={{ padding: "50px 20px" }}>
-            <Chart1></Chart1>
-            <Chart1></Chart1>
-            <Chart1></Chart1>
-            <Chart2></Chart2>
-            </div>
-
+      <div className="Charts_section" style={{display: 'flex'}}>
+        <Chart1 data={array.slice(-12)} />
+      </div>
     </div>
   );
 };

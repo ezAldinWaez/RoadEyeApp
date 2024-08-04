@@ -152,7 +152,7 @@ def process_video(self, file_path: str, video_id, model_name:str):
 
         update = {
             'progress': (count + 1) / capFrameCount * 100,
-            'details': str(statistics)
+            'details': statistics
         }
 
         # Send update through WebSocket

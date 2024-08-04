@@ -1,0 +1,13 @@
+.main {
+    padding: 50px 20px;
+    margin: 20px;
+    background-color: var(--third-color); 
+    border-radius: 10px;
+}
+
+h2 {
+    text-align: center;
+    color: var(--main-color);
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}

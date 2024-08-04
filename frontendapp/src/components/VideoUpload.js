@@ -42,14 +42,17 @@ const VideoUpload = ({ onUploadSuccess }) => {
       />
       <label htmlFor="raised-button-file">
         <Button variant="contained" color="primary" component="span">
-          <CloudUpload /> Select Video
+          <CloudUpload /> 
+          <span style={{marginLeft: '10px'}}>Select Video</span>
         </Button>
       </label>
+      <span style={{margin: '10px'}}></span>
       {file && (
         <Button onClick={handleUpload} disabled={uploading} variant="contained" color="secondary">
           Upload
         </Button>
       )}
+      <span style={{display: 'block', margin: '10px'}}></span>
       {uploading && <LinearProgress />}
     </div>
   );
