@@ -14,17 +14,19 @@ import {
 
 function App() {
   const [taskId, setTaskId] = useState(null);
-  const [videoUrl, setVideoUrl] = useState(null);
+  const [videoUrlOrg, setVideoUrlOrg] = useState(null);
+  const [videoUrlOut, setVideoUrlOut] = useState(null);
 
   const handleUploadSuccess = (newTaskId) => {
     console.log("Upload success, taskId:", newTaskId);
     setTaskId(newTaskId);
-    setVideoUrl(null);
+    setVideoUrlOrg(null);
   };
 
-  const handleProcessingComplete = (url) => {
-    console.log("Processing complete, video URL:", url);
-    setVideoUrl(url);
+  const handleProcessingComplete = (url_org, url_out) => {
+    console.log("Processing complete, video URL:", url_out);
+    setVideoUrlOrg(url_org);
+    setVideoUrlOut(url_out)
   };
 
   return (
@@ -36,14 +38,14 @@ function App() {
 
         <UploadSection onUploadSuccess={handleUploadSuccess} />
 
-        {taskId && !videoUrl && (
+        {taskId && !videoUrlOut && (
           <ProcessingSection
             taskId={taskId}
             onProcessingComplete={handleProcessingComplete}
           />
         )}
 
-        {videoUrl && <ResultsSection videoUrl={videoUrl} />}
+        {videoUrlOut && <ResultsSection videoUrlOrg={videoUrlOrg} videoUrlOut={videoUrlOut} />}
 
 
         {/* <FResultSection /> */}

@@ -1,10 +1,10 @@
 import React from 'react';
 import VideoPlayer from "../VideoPlayer"
 
-const ResultsSection = ({ videoUrl }) => {
+const ResultsSection = ({ videoUrlOrg, videoUrlOut }) => {
     return (
         <div>
-            { videoUrl && <VideoPlayer videoUrl={videoUrl} /> }
+            { videoUrlOut && <VideoPlayer videoUrlOrg={videoUrlOrg} videoUrlOut={videoUrlOut} /> }
         </div>
     );  
 };  

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { LinearProgress, Typography } from "@mui/material";
+import { LinearProgress } from "@mui/material";
 import { Chart1 } from "..";
 
 const ProcessingSection = ({ taskId, onProcessingComplete }) => {
@@ -7,12 +7,12 @@ const ProcessingSection = ({ taskId, onProcessingComplete }) => {
     progress: 0,
     details: "Initializing...",
   });
-  const [array, setArray] = useState([]);
+  const [array] = useState([]);
 
   // Ensure onProcessingComplete is stable
   const handleProcessingComplete = useCallback(
-    (url) => {
-      onProcessingComplete(url);
+    (url_org, url_out) => {
+      onProcessingComplete(url_org, url_out);
     },
     [onProcessingComplete]
   );
@@ -58,18 +58,18 @@ const ProcessingSection = ({ taskId, onProcessingComplete }) => {
 
         let willAppend = true;
         for (let i = 0; i < array.length; i++)                                                                      
-          if (data.message.video_url || array[i].frame_num === data.message.details.frame_num) {
+          if (data.message.video_url_out || array[i].frame_num === data.message.details.frame_num) {
             willAppend = false;
             break;
           }
         if (willAppend) array.push(data.message.details);
 
-        if (data.message.progress === 100 && data.message.video_url) {
+        if (data.message.progress === 100 && data.message.video_url_out) {
           console.log(
             "Processing complete, calling onProcessingComplete with URL:",
-            data.message.video_url
+            data.message.video_url_out
           );
-          handleProcessingComplete(data.message.video_url);
+          handleProcessingComplete(data.message.video_url_org, data.message.video_url_out);
         }
       };
     };
@@ -88,7 +88,13 @@ const ProcessingSection = ({ taskId, onProcessingComplete }) => {
 
   return (
     <div>
-      <Typography variant="h6">Processing Video</Typography>
+      <h2 style={{
+        textAlign: 'center',
+        color: 'var(--main-color)',
+        marginBottom: '20px',
+        fontSize: '2.5em',
+      }}>Processing Video</h2>
+      {/* <Typography variant="h6">Processing Video</Typography> */}
       <LinearProgress variant="determinate" value={status.progress} />
       <div className="Charts_section" style={{display: 'flex'}}>
         <Chart1 data={array.slice(-12)} />

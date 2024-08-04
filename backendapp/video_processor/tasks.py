@@ -168,21 +168,27 @@ def process_video(self, file_path: str, video_id, model_name:str):
     capture.release()
     writer.release()
 
-    video.processed = True
-    video.processed_at = timezone.now()
-    video.file.name = output_path.rsplit('/', 1)[-1]
-    video.save()
 
+    org_video_name = file_path.rsplit('/', 1)[-1]
+    out_video_name = output_path.rsplit('/', 1)[-1]
+    
     async_to_sync(channel_layer.group_send)(
         f'video_{video.task_id}',
         {
             'type': 'processing_update',
             'message': {
                 'progress': 100.0,
-                'video_url': f'http://localhost:8000/media/videos/{video.file.name}'
+                'video_url_org': f'http://localhost:8000/media/videos/{org_video_name}',
+                'video_url_out': f'http://localhost:8000/media/videos/{out_video_name}'
             }
         }
     )
+    
+    video.processed = True
+    video.processed_at = timezone.now()
+    video.file.name = out_video_name
+    video.save()
+
 
     return {'details': 'Video processing completed', 'progress': 100}
 

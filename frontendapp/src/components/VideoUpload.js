@@ -6,20 +6,23 @@ import { CloudUpload } from '@mui/icons-material';
 const VideoUpload = ({ onUploadSuccess }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [modelName, setModelName] = useState('none'); // Default model
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
+  const handleModelChange = (e) => {
+    setModelName(e.target.value);
+  };
+
   const handleUpload = async () => {
     if (!file) return;
-
-    let modelName = 'pretrained_e50' //TODO: Set it from user
 
     setUploading(true);
     const formData = new FormData();
     formData.append('video', file);
-    formData.append('model', modelName)
+    formData.append('model', modelName);
 
     try {
       const response = await axios.post('http://localhost:8000/api/upload/', formData);
@@ -32,7 +35,7 @@ const VideoUpload = ({ onUploadSuccess }) => {
   };
 
   return (
-    <div>
+    <div style={{ padding: '20px', textAlign: 'center' }}>
       <input
         accept="video/*"
         style={{ display: 'none' }}
@@ -42,18 +45,43 @@ const VideoUpload = ({ onUploadSuccess }) => {
       />
       <label htmlFor="raised-button-file">
         <Button variant="contained" color="primary" component="span">
-          <CloudUpload /> 
-          <span style={{marginLeft: '10px'}}>Select Video</span>
+          <CloudUpload />
+          <span style={{ marginLeft: '10px' }}>Select Video</span>
         </Button>
       </label>
-      <span style={{margin: '10px'}}></span>
+      <div style={{ margin: '10px 0' }}>
+        <span style={{ margin: '5px 0', display: 'block' }}>Select Model</span>
+        <select
+          className="select"
+          value={modelName}
+          onChange={handleModelChange}
+          style={{
+            padding: '10px',
+            borderRadius: '5px',
+            border: '1px solid #ccc',
+            width: '200px',
+            fontSize: '16px',
+          }}
+        >
+          <option value="non_pretrained_50">non_pretrained_50</option>
+          <option value="preprocessed_pretrained_e50">preprocessed_pretrained_e50</option>
+          <option value="pretrained_e50">pretrained_e50</option>
+        </select>
+      </div>
       {file && (
-        <Button onClick={handleUpload} disabled={uploading} variant="contained" color="secondary">
+        <Button
+          onClick={handleUpload}
+          disabled={uploading}
+          variant="contained"
+          color="secondary"
+          style={{ margin: '10px' }}
+        >
           Upload
         </Button>
       )}
-      <span style={{display: 'block', margin: '10px'}}></span>
-      {uploading && <LinearProgress />}
+      <div style={{width: '80%', margin: 'auto'}}>
+        {uploading && <LinearProgress />}
+      </div>
     </div>
   );
 };
