@@ -1,14 +1,14 @@
 # How to First Start the App
 
-1. Run `git clone https://github.com/ezAldinWaez/RoadEyeApp.git` then `cd .\RoadEyeApp`;
-2. Create new Conda enviroment and activate it;
-3. Run `conda install anaconda::django conda-forge::celery conda-forge::djangorestframework conda-forge::django-cors-headers`;
-4. Download 'Redis-x64-5.0.14.1.zip' and extract it into 'C:\Redis';
-5. Run `conda install anaconda::redis` then `pip install channels-redis`;
-6. Run `conda install pytorch torchvision torchaudio cpuonly -c pytorch` then `conda install -c conda-forge ultralytics celery`;
-7. Run `python .\backendapp\manage.py makemigrations`;
-8. Run `python .\backendapp\manage.py migrate`;
-9. Run `cd .\frontend` then `npm install`.
+1. Download 'Redis-x64-5.0.14.1.zip' and extract it into 'C:\Redis';
+2. Run `git clone https://github.com/ezAldinWaez/RoadEyeApp.git` then `cd .\RoadEyeApp`;
+4. Create new Conda enviroment and activate it;
+5. Run `conda install pytorch torchvision torchaudio cpuonly -c pytorch` then `conda install `;
+6. Run `conda install conda-forge::ultralytics anaconda::django conda-forge::celery conda-forge::djangorestframework conda-forge::django-cors-headers anaconda::redis`;
+7. Run `pip install channels-redis`;
+9. Run `python .\backendapp\manage.py makemigrations`;
+10. Run `python .\backendapp\manage.py migrate`;
+11. Run `cd .\frontend` then `npm install`.
 
 # How to Run the App
 
