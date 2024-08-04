@@ -34,7 +34,7 @@
 }  
 
 .custom-file-upload input[type='file'] {  
-    display: none; /* Hide the default file input */  
+    display: none;
 } 
 
 .custom-file-upload:hover {  
@@ -53,12 +53,12 @@
 
 .upload-button:hover {  
     background-color: var(--secondary-color, #007bff);  
-    transform: scale(1.05); /* Slightly enlarge on hover */  
+    transform: scale(1.05);
 } 
 
 .upload-button:focus {  
     outline: none;  
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Add focus outline */  
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }  
 
 .progress-container {  

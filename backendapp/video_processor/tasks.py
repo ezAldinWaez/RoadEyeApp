@@ -35,7 +35,7 @@ def process_video(self, file_path: str, video_id):
         frameSize=(capFrameWidth, capFrameHight))
 
     # Load the model
-    model = YOLO("../static/models/pretrained_e50.pt")
+    model = YOLO("/backendapp/static/models/pretrained_e50.pt")
 
     count = 0
     while capture.isOpened():
