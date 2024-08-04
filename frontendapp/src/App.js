@@ -1,6 +1,5 @@
 import React from 'react';   
 import './App.css';  
-// import VideoUpload from './components/VideoUpload';
 import {   
     Chart1,   
     Chart2,   
@@ -23,7 +22,6 @@ function App() {
       <div style={{width: '90%', margin: '0 auto'}}>
         <SSection/>
         <Uploadf/>
-        {/* <VideoUpload/> */}
         <div className='Charts_section' style={{padding: '50px 20px', }}>
           <Chart1></Chart1>
           <Chart1></Chart1>
