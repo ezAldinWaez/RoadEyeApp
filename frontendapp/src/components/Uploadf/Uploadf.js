@@ -1,6 +1,6 @@
 import React, { useState } from 'react';  
 import axios from 'axios';  
-import ProcessingStatus from '../ProcessingStatus';  
+import ProcessingSection from '../ProcessingSection/ProcessingSection';  
 import VideoPlayer from '../VideoPlayer';  
 import './Upload.css';  
 
@@ -66,7 +66,7 @@ function Uploadf() {
                 </div>  
             </div>  
             {taskId && !videoUrl && (  
-                <ProcessingStatus   
+                <ProcessingSection   
                     taskId={taskId}   
                     onProcessingComplete={handleProcessingComplete}   
                 />  

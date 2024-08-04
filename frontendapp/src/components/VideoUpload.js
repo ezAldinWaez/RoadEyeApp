@@ -14,9 +14,12 @@ const VideoUpload = ({ onUploadSuccess }) => {
   const handleUpload = async () => {
     if (!file) return;
 
+    let modelName = 'pretrained_e50' //TODO: Set it from user
+
     setUploading(true);
     const formData = new FormData();
     formData.append('video', file);
+    formData.append('model', modelName)
 
     try {
       const response = await axios.post('http://localhost:8000/api/upload/', formData);

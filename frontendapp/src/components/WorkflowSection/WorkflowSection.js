@@ -1,9 +1,9 @@
 import React from 'react';  
-import './SSection.css';  
+import './WorkflowSection.css';  
 
-const SSection = () => {  
+const WorkflowSection = () => {  
     return (  
-        <section className="SSection">  
+        <section className="WorkflowSection">  
             <h2>How It Works</h2>  
             <div className="steps">  
                 <div className="step">  
@@ -31,4 +31,4 @@ const SSection = () => {
     );  
 };  
 
-export default SSection;
+export default WorkflowSection;

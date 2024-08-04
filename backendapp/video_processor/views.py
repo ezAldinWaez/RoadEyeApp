@@ -16,6 +16,8 @@ class VideoUploadView(APIView):
 
     def post(self, request):
         video_file = request.FILES.get('video')
+        model_name = request.POST.get('model')
+
         if not video_file:
             return Response({'error': 'No video file provided'}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -31,7 +33,7 @@ class VideoUploadView(APIView):
         video = Video.objects.create(file=file_name)
         
         # Start the processing task
-        task = process_video.delay(file_path, video.id)
+        task = process_video.delay(file_path, video.id, model_name)
         
         # Update the Video object with the task ID
         video.task_id = task.id

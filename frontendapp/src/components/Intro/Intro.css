@@ -1,11 +1,11 @@
-.FSection {  
+.Intro {  
     width: 100%;  
     height: 50vh;  
     position: relative;  
     overflow: hidden;
 }  
 
-.FSection .text {
+.Intro .text {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -19,13 +19,13 @@
     color: white;
 }
 
-.FSection .text h3 {
+.Intro .text h3 {
     margin-top: 20px;
     font-size: 20px;
     color: #ddd;
 }
 
-.FSection-video { 
+.Intro-video { 
     position: absolute;  
     top: 50%;  
     left: 50%;  

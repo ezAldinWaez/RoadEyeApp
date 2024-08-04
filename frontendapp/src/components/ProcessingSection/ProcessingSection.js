@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { LinearProgress, Typography } from '@mui/material';
+import { Chart1, Chart2 } from '..'
 
-const ProcessingStatus = ({ taskId, onProcessingComplete }) => {
+const ProcessingSection = ({ taskId, onProcessingComplete }) => {
   const [status, setStatus] = useState({ progress: 0, details: 'Initializing...' });
 
   useEffect(() => {
@@ -63,8 +64,16 @@ const ProcessingStatus = ({ taskId, onProcessingComplete }) => {
       <Typography variant="h6">Processing Video</Typography>
       <LinearProgress variant="determinate" value={status.progress} />
       <Typography>{status.details}</Typography>
+
+      <div className="Charts_section" style={{ padding: "50px 20px" }}>
+            <Chart1></Chart1>
+            <Chart1></Chart1>
+            <Chart1></Chart1>
+            <Chart2></Chart2>
+            </div>
+
     </div>
   );
 };
 
-export default ProcessingStatus;
+export default ProcessingSection;

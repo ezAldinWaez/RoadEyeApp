@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';  
-import './FSection.css';  
+import './Intro.css';  
 
-function FSection() {  
+function Intro() {  
     const videoRef = useRef(null);  
 
     useEffect(() => {  
@@ -11,13 +11,13 @@ function FSection() {
     }, []);  
 
     return (  
-        <div className='FSection' id='FSection'>  
+        <div className='Intro' id='Intro'>  
             <video   
                 ref={videoRef}   
                 autoPlay   
                 loop   
                 muted   
-                className='FSection-video'   
+                className='Intro-video'   
                 src={'/assets/video.mp4'}   
             />  
             <div className='text'>
@@ -28,4 +28,4 @@ function FSection() {
     );  
 }  
 
-export default FSection;
+export default Intro;

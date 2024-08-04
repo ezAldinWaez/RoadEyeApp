@@ -10,7 +10,7 @@ from collections import defaultdict
 
 
 @shared_task(bind=True)
-def process_video(self, file_path: str, video_id):
+def process_video(self, file_path: str, video_id, model_name:str):
     try:
         video = Video.objects.get(id=video_id)
     except Video.DoesNotExist:
@@ -35,7 +35,7 @@ def process_video(self, file_path: str, video_id):
         frameSize=(capFrameWidth, capFrameHight))
 
     # Load the model
-    model = YOLO("../static/models/pretrained_e50.pt")
+    model = YOLO(f"../static/models/{model_name}.pt")
 
     count = 0
     while capture.isOpened():
