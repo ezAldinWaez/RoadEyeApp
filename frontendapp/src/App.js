@@ -38,7 +38,7 @@ function App() {
 
         <UploadSection onUploadSuccess={handleUploadSuccess} />
 
-        {taskId && !videoUrlOut && (
+        {taskId && (
           <ProcessingSection
             taskId={taskId}
             onProcessingComplete={handleProcessingComplete}

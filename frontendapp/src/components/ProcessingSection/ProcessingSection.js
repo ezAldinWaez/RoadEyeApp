@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { LinearProgress } from "@mui/material";
 import { Chart1 } from "..";
+import './ProcessingSection.css'
 
 const ProcessingSection = ({ taskId, onProcessingComplete }) => {
   const [status, setStatus] = useState({
     progress: 0,
     details: "Initializing...",
   });
+  const [image, setImage] = useState('')
   const [array] = useState([]);
 
   // Ensure onProcessingComplete is stable
@@ -55,7 +57,7 @@ const ProcessingSection = ({ taskId, onProcessingComplete }) => {
         console.log("Received WebSocket message:", event.data);
         const data = JSON.parse(event.data);
         setStatus(data.message);
-
+        setImage(data.message.frame_url)
         let willAppend = true;
         for (let i = 0; i < array.length; i++)                                                                      
           if (data.message.video_url_out || array[i].frame_num === data.message.details.frame_num) {
@@ -94,10 +96,13 @@ const ProcessingSection = ({ taskId, onProcessingComplete }) => {
         marginBottom: '20px',
         fontSize: '2.5em',
       }}>Processing Video</h2>
-      {/* <Typography variant="h6">Processing Video</Typography> */}
       <LinearProgress variant="determinate" value={status.progress} />
-      <div className="Charts_section" style={{display: 'flex'}}>
-        <Chart1 data={array.slice(-12)} />
+      <div className="Charts_section" >
+
+        <Chart1 data={array.slice(-Math.min(array.length - 1, 12))} />
+        <div style={{width: '47%'}}>
+          <img src={image} style={{maxWidth: '100%'}}/>
+        </div>
       </div>
     </div>
   );

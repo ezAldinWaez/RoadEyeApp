@@ -46,12 +46,12 @@ const VideoUpload = ({ onUploadSuccess }) => {
       <label htmlFor="raised-button-file">
         <Button variant="contained" color="primary" component="span">
           <CloudUpload />
-          <span style={{ marginLeft: '10px' }}>Select Video</span>
+          <span style={{ marginLeft: '10px' }}>Select The Video</span>
         </Button>
       </label>
       <div style={{ margin: '10px 0' }}>
-        <span style={{ margin: '5px 0', display: 'block' }}>Select Model</span>
         <select
+          name='model-selection'
           className="select"
           value={modelName}
           onChange={handleModelChange}
@@ -63,12 +63,13 @@ const VideoUpload = ({ onUploadSuccess }) => {
             fontSize: '16px',
           }}
         >
+          <option selected hidden> Select The Model</option>
+          <option value="pretrained_e50">pretrained_e50</option>
           <option value="non_pretrained_50">non_pretrained_50</option>
           <option value="preprocessed_pretrained_e50">preprocessed_pretrained_e50</option>
-          <option value="pretrained_e50">pretrained_e50</option>
         </select>
       </div>
-      {file && (
+      {file && modelName !== 'none' &&(
         <Button
           onClick={handleUpload}
           disabled={uploading}

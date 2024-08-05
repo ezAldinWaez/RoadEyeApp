@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Typography } from '@mui/material';
+import Chart1 from './Chart1/Chart1'
 
 const VideoPlayer = ({ videoUrlOrg, videoUrlOut }) => {
   const videoRef = useRef(null);
@@ -17,7 +18,14 @@ const VideoPlayer = ({ videoUrlOrg, videoUrlOut }) => {
   };
 
   return (
-    <div style={{display: 'flex', gap: '20px', padding: '20px', margin: '20px', backgroundColor: 'var(--third-color)', borderRadius: '10px'}}>
+    <div style={{
+      display: 'flex',
+      gap: '20px',
+      padding: '20px',
+      margin: '20px',
+      backgroundColor: 'var(--third-color)',
+      borderRadius: '10px',
+      }}>
       <div>
         <Typography variant="h6">Origin Video</Typography>
         <video 

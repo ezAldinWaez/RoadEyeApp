@@ -67,9 +67,12 @@ const Chart1 = ({ data }) => {
     // Prepare the series data
     const seriesData = {};
 
-    data.forEach(item => {
+    console.log('🔥🔥🔥🔥')
+    console.log(data)
+
+    data?.forEach(item => {
       const { time_in_video, objects } = item;
-      objects.forEach(obj => {
+      objects?.forEach(obj => {
         const { id, speed } = obj;
         if (!seriesData[id]) {
           seriesData[id] = {
@@ -89,7 +92,7 @@ const Chart1 = ({ data }) => {
         ...chartData.options,
         xaxis: {
           ...chartData.options.xaxis,
-          categories: data.map(item => item.time_in_video),
+          categories: data?.map(item => item.time_in_video),
         },
         yaxis: {
           ...chartData.options.yaxis,
@@ -101,12 +104,12 @@ const Chart1 = ({ data }) => {
   }, [data]);
 
   return (
-    <div style={{flex: '1', padding: '20px', maxHeight: '60vh', margin: '0px 20px 50px'}}>
-      <div id="chart" className="d-flex justify-content-center">
-        <ReactApexChart position={'center'} options={chartData.options} series={chartData.series} type="line"/>
-      </div>
-      <div id="html-dist"></div>
+    // <div style={{flex: '1', padding: '20px', maxHeight: '60vh', margin: '0px 20px 50px'}}>
+    <div id="chart" className="d-flex justify-content-center" style={{width: '47%'}}>
+      <ReactApexChart position={'center'} options={chartData.options} series={chartData.series} type="line"/>
     </div>
+    // {/* <div id="html-dist"></div> */}
+    // </div>
   );
 }
 
