@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import WebSocket from 'isomorphic-ws'; 
 import { LinearProgress } from "@mui/material";
 import { Chart1 } from "..";
 import './ProcessingSection.css'

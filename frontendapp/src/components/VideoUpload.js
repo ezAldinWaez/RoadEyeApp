@@ -6,7 +6,7 @@ import { CloudUpload } from '@mui/icons-material';
 const VideoUpload = ({ onUploadSuccess }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [modelName, setModelName] = useState('none'); // Default model
+  const [modelName, setModelName] = useState('none');
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -59,8 +59,9 @@ const VideoUpload = ({ onUploadSuccess }) => {
             padding: '10px',
             borderRadius: '5px',
             border: '1px solid #ccc',
-            width: '200px',
+            width: '206px',
             fontSize: '16px',
+            cursor: 'pointer',
           }}
         >
           <option selected hidden> Select The Model</option>

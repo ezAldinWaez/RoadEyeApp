@@ -4,12 +4,10 @@ import './Header.css'
 function Header() {
   return (
     <div className='header'>
-      <div className="logo">  
-        <img src={'/assets/logo.png'} alt="Logo"/>
-      </div>  
+      <img src={'/assets/logo.png'} alt="Logo"/> 
       <nav className="nav">  
         <ul>  
-          <li><a href="#uploadf">Try It</a></li>  
+          <li><a href="#try-it">Try It</a></li>  
           <li><a href="#about">About</a></li>  
           <li><a href="#contact">Contact</a></li>  
         </ul>  

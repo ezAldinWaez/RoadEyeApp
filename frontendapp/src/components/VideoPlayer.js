@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { Typography } from '@mui/material';
-import Chart1 from './Chart1/Chart1'
 
 const VideoPlayer = ({ videoUrlOrg, videoUrlOut }) => {
   const videoRef = useRef(null);
@@ -16,6 +15,17 @@ const VideoPlayer = ({ videoUrlOrg, videoUrlOut }) => {
   const handleError = (e) => {
     console.error('Video error:', e);
   };
+
+
+  const videoPath = videoUrlOut; // Replace with your actual video path  
+
+    const handleDownload = () => {  
+        const link = document.createElement('a');  
+        link.href = videoPath;  
+        link.download = "predected.mp4"; // Replace with your desired file name  
+        link.click();  
+    };  
+
 
   return (
     <div style={{
@@ -51,6 +61,23 @@ const VideoPlayer = ({ videoUrlOrg, videoUrlOut }) => {
           <source src={videoUrlOut} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
+        <div className="button-container"
+             style={{
+              display: 'flex',
+              justifyContent: 'center',
+             }}>  
+                <button onClick={handleDownload} className="download-button"
+                        style={{
+                          padding: '5px 10px',
+                          backgroundColor: 'var(--main-color)',
+                          color: 'white',
+                          border: 'none',
+                          width: 'fit-content',
+                          borderRadius: '3px',
+                        }}>  
+                    Download Processed Video  
+                </button>  
+            </div>  
       </div>
     </div>
   );

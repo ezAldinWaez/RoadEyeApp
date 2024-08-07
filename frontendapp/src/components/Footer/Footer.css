@@ -2,7 +2,8 @@
     background-color: var(--third-color);
     color: black;  
     padding: 20px;  
-    text-align: center;  
+    text-align: center;
+
 }  
 
 .footer-content {  
@@ -16,6 +17,14 @@
     min-width: 200px;
     margin: 10px;  
 }  
+
+.footer-section h3 {
+    text-align: center;
+}
+
+.footer-section:last-child {
+    text-align: justify;
+}
 
 .footer-section p, .footer-section ul {  
     color: var(--text-color);
@@ -32,7 +41,8 @@
 
 .footer-section ul li a {  
     text-decoration: none; 
-    color: var(--text-color);
+    color: var(--main-color);
+    font-weight: 600
 }  
 
 .footer-bottom {  

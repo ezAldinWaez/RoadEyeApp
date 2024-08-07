@@ -11,3 +11,17 @@ h2 {
     margin-bottom: 20px;
     font-size: 2.5em;
 }
+
+.upf {
+    display: flex;
+    gap: 40px;
+}
+
+.upf .text {
+    max-width: 400px;
+    text-align: justify;
+}
+
+.upf div:nth-child(2) {
+    flex: 1;
+}

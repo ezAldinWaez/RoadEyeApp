@@ -9,22 +9,23 @@ const WorkflowSection = () => {
                 <div className="step">  
                     <div className="step-number">1</div>  
                     <h3>Data Collection</h3>  
-                    <p>We gather real-time video feed from traffic cameras to analyze vehicle counts.</p>  
+                    <p>
+                    Upload your video footage directly to our platform. We support various formats for a seamless experience. Once uploaded, our algorithms begin processing the data to extract valuable information.
+                    </p>  
                 </div>  
                 <div className="step">  
                     <div className="step-number">2</div>  
-                    <h3>Processing</h3>  
-                    <p>Our AI algorithms process the video feed to accurately detect and classify vehicles.</p>  
+                    <h3>Analysis</h3>  
+                    <p>
+                    Our AI-driven tools detect and track vehicles in real-time. We provide insights into vehicle counts, types, speeds, and movement patterns, helping you understand traffic dynamics effectively.
+                    </p>  
                 </div>  
                 <div className="step">  
                     <div className="step-number">3</div>  
-                    <h3>Analysis</h3>  
-                    <p>We analyze traffic patterns and produce reports to assist in traffic management.</p>  
-                </div>  
-                <div className="step">  
-                    <div className="step-number">4</div>  
                     <h3>Insights</h3>  
-                    <p>Gain valuable insights from our comprehensive data reports and visualizations.</p>  
+                    <p>
+                    Receive comprehensive reports and visualizations highlighting key metrics. Our insights assist in traffic management, urban planning, and enhancing road safety for better community outcomes.
+                    </p>  
                 </div>  
             </div>  
         </section>  

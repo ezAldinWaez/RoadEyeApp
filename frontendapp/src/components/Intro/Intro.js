@@ -22,7 +22,7 @@ function Intro() {
             />  
             <div className='text'>
                 <h1>Car Detection Made Easy</h1>
-                <h3>Upload your video and let our AI analyze traffic patterns and vehicle counts.</h3>
+                <h3>Upload your video and let our AI analyze vehicle patterns and traffic insights.</h3>
             </div>
         </div>  
     );  

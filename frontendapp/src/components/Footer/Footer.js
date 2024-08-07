@@ -21,12 +21,16 @@ const Footer = () => {
                 </div>  
                 <div className="footer-section">  
                     <h3>Contact Us</h3>  
-                    <p>Email: support@yourwebsite.com</p>  
-                    <p>Phone: (123) 456-7890</p>  
+                    <p>Email: 
+                    <br/>
+                    mohammadyl69ghannam@gmail.com</p>  
+                    <p>Phone:
+                    <br/>
+                    +963 984 166 888</p>  
                 </div>  
             </div>  
             <div className="footer-bottom">  
-                <p>© {new Date().getFullYear()} Your Company Name. All rights reserved.</p>  
+                <p>© {new Date().getFullYear()} RoadEye. All rights reserved.</p>  
             </div>  
         </footer>  
     );  
