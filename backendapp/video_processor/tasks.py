@@ -39,6 +39,7 @@ def process_video(self, file_path: str, video_id, model_name:str):
         frameSize=(capFrameWidth, capFrameHight))
 
     model = YOLO(f"../static/models/{model_name}.pt")
+    # model = YOLO(f"C:/Users/Mohammad_Ghannam/Desktop/RoadEyeApp/backendapp/static/models/{model_name}.pt")
 
     count = 0
     while capture.isOpened():
@@ -56,7 +57,7 @@ def process_video(self, file_path: str, video_id, model_name:str):
             "objects": []
         }
 
-        roi_x, roi_y = 0, 200
+        roi_x, roi_y = 0, 100
         roi_w, roi_h = 1100, 1080
         roi = frame[roi_y:roi_h, roi_x:roi_w]
 
@@ -118,9 +119,9 @@ def process_video(self, file_path: str, video_id, model_name:str):
                 text_width = cv.getTextSize(
                     text, fontFace, fontScale, thickness=2)[0][0]
                 cv.putText(
-                    img=roi,
+                    img=frame,
                     text=text,
-                    org=(int((x1 + w / 2 - text_width / 2)), int(y1 - 10)),
+                    org=(int((roi_x + x1 + w / 2 - text_width / 2)), int(roi_y + y1 - 10)),
                     fontFace=fontFace,
                     fontScale=fontScale,
                     color=(0, 0, 255),

@@ -53,53 +53,9 @@ class VideoUploadView(APIView):
         
         return True
 
-class ProcessingStatusView(APIView):
-    def get(self, request, task_id):
-        task = AsyncResult(task_id)
-        
-        if task.state == 'PENDING':
-            response = {
-                'state': 'Pending',
-                'details': 'Video processing is queued.',
-                'progress': 0
-            }
-        elif task.state == 'PROGRESS':
-            response = {
-                'state': 'Processing',
-                'details': task.info.get('details', ''),
-                'progress': task.info.get('progress', 0)
-            }
-        elif task.state == 'SUCCESS':
-            response = {
-                'state': 'Completed',
-                'details': 'Video processing is complete.',
-                'progress': 100
-            }
-        else:
-            response = {
-                'state': 'Error',
-                'details': str(task.info),
-                'progress': 0
-            }
-        
-        return Response(response)
+class ModelsView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
 
-
-class ResultView(APIView):
-    def get(self, request, task_id):
-        try:
-            video = Video.objects.get(task_id=task_id)
-            if video.processed:
-                return Response({
-                    'video_url': request.build_absolute_uri(video.file.url),
-                    'processed': True,
-                    'duration': video.duration,
-                    'resolution': video.resolution,
-                    'format': video.format,
-                    'created_at': video.created_at,
-                    'processed_at': video.processed_at
-                })
-            else:
-                return Response({'processed': False, 'message': 'Video is still processing'})
-        except Video.DoesNotExist:
-            return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
+    def get(self, request):
+        return Response({'models': [os.path.dirname('../static/models')]}, status=status.HTTP_202_ACCEPTED)
+        # return Response({'models': os.listdir('C:/Users/Mohammad_Ghannam/Desktop/RoadEyeApp/backendapp/static/models')}, status=status.HTTP_202_ACCEPTED)
