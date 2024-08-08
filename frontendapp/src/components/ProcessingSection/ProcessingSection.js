@@ -96,7 +96,7 @@ const ProcessingSection = ({ taskId, onProcessingComplete }) => {
         marginBottom: '20px',
         fontSize: '2.5em',
       }}>Processing Video</h2>
-      <LinearProgress variant="determinate" value={status.progress} />
+      <LinearProgress variant="determinate" value={status.progress} style={{margin: '20px'}}/>
       <div className="Charts_section" >
 
         <Chart1 data={array.slice(-Math.min(array.length - 1, 12))} />

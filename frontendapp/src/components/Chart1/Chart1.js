@@ -67,7 +67,6 @@ const Chart1 = ({ data }) => {
     // Prepare the series data
     const seriesData = {};
 
-    console.log('🔥🔥🔥🔥')
     console.log(data)
 
     data?.forEach(item => {

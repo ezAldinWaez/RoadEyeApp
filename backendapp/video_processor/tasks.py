@@ -93,7 +93,7 @@ def process_video(self, file_path: str, video_id, model_name:str, roi_x1, roi_y1
             img=frame,
             pt1=(int(roi_sx1), int(roi_sy1)),
             pt2=(int(roi_sx2), int(roi_sy2)),
-            color=(95, 150, 124),
+            color=(255, 0, 0),
             thickness=2)
 
         results = model.track(source=roi, persist=True)

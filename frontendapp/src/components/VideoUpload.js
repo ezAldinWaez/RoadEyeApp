@@ -91,8 +91,8 @@ const VideoUpload = ({ onUploadSuccess }) => {
           }}
         >
           <option selected hidden> Select The Model</option>
-          <option value="pretrained">Pretrained</option>
-          <option value="non_pretrained_50">Non-Pretrained</option>
+          <option value="pretrained_e50">Pretrained</option>
+          <option value="non_pretrained_e50">Non-Pretrained</option>
           <option value="preprocessed_pretrained_e50">Preprocessed Pretrained</option>
         </select>
       </span>
@@ -104,6 +104,7 @@ const VideoUpload = ({ onUploadSuccess }) => {
       </label>
       { file && !uploaded &&
         <div style={{margin: '20px'}}>
+          <h4>Select The Region of Interest 👇🏻</h4>
           <RectangleDrawing videoFile={file} onRectangleDrawn={handleROIChange}/>
         </div>
       }
