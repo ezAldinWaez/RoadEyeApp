@@ -13,13 +13,16 @@ from math import atan2, degrees
 
 
 @shared_task(bind=True)
-def process_video(self, file_path: str, video_id, model_name:str):
+def process_video(self, file_path: str, video_id, model_name:str, roi_x1, roi_y1, roi_x2, roi_y2):
     try:
         video = Video.objects.get(id=video_id)
     except Video.DoesNotExist:
         return {'details': 'Video not found'}
     except Exception as e:
         return {'details': f'Error occurred: {str(e)}'}
+
+    if(model_name == 'preprocessed_pretrained_e50'):
+        background = get_video_background(file_path)
 
     channel_layer = get_channel_layer()
     track_history = defaultdict(lambda: [])
@@ -30,6 +33,30 @@ def process_video(self, file_path: str, video_id, model_name:str):
     capFrameWidth = int(capture.get(cv.CAP_PROP_FRAME_WIDTH))
     capFrameHight = int(capture.get(cv.CAP_PROP_FRAME_HEIGHT))
     capTimeStep = 1 / capFps
+
+
+    if roi_x1 > roi_x2:
+        if roi_y1 > roi_y2:
+            roi_sx1 = int(float(roi_x2) * capFrameWidth)
+            roi_sy1 = int(float(roi_y2) * capFrameHight)
+            roi_sx2 = int(float(roi_x1) * capFrameWidth)
+            roi_sy2 = int(float(roi_y1) * capFrameHight)
+        else: # roi_y2 > roi_y1
+            roi_sx1 = int(float(roi_x2) * capFrameWidth)
+            roi_sy1 = int(float(roi_y1) * capFrameHight)
+            roi_sx2 = int(float(roi_x1) * capFrameWidth)
+            roi_sy2 = int(float(roi_y2) * capFrameHight)
+    else: # roi_x2 > roi_x1
+        if roi_y1 > roi_y2:
+            roi_sx1 = int(float(roi_x1) * capFrameWidth)
+            roi_sy1 = int(float(roi_y2) * capFrameHight)
+            roi_sx2 = int(float(roi_x2) * capFrameWidth)
+            roi_sy2 = int(float(roi_y1) * capFrameHight)
+        else: # roi_y2 > roi_y1
+            roi_sx1 = int(float(roi_x1) * capFrameWidth)
+            roi_sy1 = int(float(roi_y1) * capFrameHight)
+            roi_sx2 = int(float(roi_x2) * capFrameWidth)
+            roi_sy2 = int(float(roi_y2) * capFrameHight)
 
     output_path = file_path.rsplit('.', 1)[0] + '_predected.mp4'
     writer = cv.VideoWriter(
@@ -49,6 +76,9 @@ def process_video(self, file_path: str, video_id, model_name:str):
         if not success:
             break
 
+        if model_name == 'preprocessed_pretrained_e50':
+            frame = preprocessing(background, frame)
+
         timestamp = count * capTimeStep
 
         statistics = {
@@ -57,14 +87,12 @@ def process_video(self, file_path: str, video_id, model_name:str):
             "objects": []
         }
 
-        roi_x, roi_y = 0, 100
-        roi_w, roi_h = 1100, 1080
-        roi = frame[roi_y:roi_h, roi_x:roi_w]
+        roi = frame[roi_sy1:roi_sy2, roi_sx1:roi_sx2]
 
         cv.rectangle(
             img=frame,
-            pt1=(int(roi_x), int(roi_y)),
-            pt2=(int(roi_w), int(roi_h)),
+            pt1=(int(roi_sx1), int(roi_sy1)),
+            pt2=(int(roi_sx2), int(roi_sy2)),
             color=(95, 150, 124),
             thickness=2)
 
@@ -121,7 +149,7 @@ def process_video(self, file_path: str, video_id, model_name:str):
                 cv.putText(
                     img=frame,
                     text=text,
-                    org=(int((roi_x + x1 + w / 2 - text_width / 2)), int(roi_y + y1 - 10)),
+                    org=(int((roi_sx1 + x1 + w / 2 - text_width / 2)), int(roi_sy1 + y1 - 10)),
                     fontFace=fontFace,
                     fontScale=fontScale,
                     color=(0, 0, 255),
@@ -252,6 +280,28 @@ def smooth_path(data, window_length=10, poly_order=2):
     
     return list(zip(timestamps, smoothed_x, smoothed_y))
 
+
+def get_video_background(video_path):
+    capture = cv.VideoCapture(video_path)
+    frames = []
+    while capture.isOpened():
+        success, frame = capture.read()
+        if not success:
+            break
+        frames.append(frame)
+    background = np.median(frames, axis=0).astype('uint8')
+    del frames
+    return background
+
+def preprocessing(background, frame):
+    foreground = cv.absdiff(frame, background)
+    # foreground_gray = cv.cvtColor(foreground, cv.COLOR_BGR2GRAY)
+    # foreground_bin = cv.threshold(foreground_gray, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1].astype(np.uint8)
+    # foreground_cln = cv.erode(foreground_bin, np.ones((3, 3), np.uint8), iterations=2)
+    # foreground_cln = cv.dilate(foreground_cln, np.ones((3, 3), np.uint8), iterations=50)
+    # foreground_cln_3c = np.array([[p] * 3 for p in foreground_cln.flatten()], dtype=np.uint8).reshape((*foreground_cln.shape, 3))
+    # result = frame & foreground_cln_3c
+    return foreground
 
 # def calculate_speed(track_history, fps):
 #     speeds = {}

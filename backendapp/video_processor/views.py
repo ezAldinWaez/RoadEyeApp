@@ -6,6 +6,7 @@ from .tasks import process_video
 from django.core.files.storage import default_storage
 from celery.result import AsyncResult
 import os
+import json
 
 import os
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -17,6 +18,11 @@ class VideoUploadView(APIView):
     def post(self, request):
         video_file = request.FILES.get('video')
         model_name = request.POST.get('model')
+        roi_x1 = request.POST.get('x1')
+        roi_y1 = request.POST.get('y1')
+        roi_x2 = request.POST.get('x2')
+        roi_y2 = request.POST.get('y2')
+
 
         if not video_file:
             return Response({'error': 'No video file provided'}, status=status.HTTP_400_BAD_REQUEST)
@@ -33,7 +39,7 @@ class VideoUploadView(APIView):
         video = Video.objects.create(file=file_name)
         
         # Start the processing task
-        task = process_video.delay(file_path, video.id, model_name)
+        task = process_video.delay(file_path, video.id, model_name, roi_x1, roi_y1, roi_x2, roi_y2)
         
         # Update the Video object with the task ID
         video.task_id = task.id

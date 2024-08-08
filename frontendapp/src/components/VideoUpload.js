@@ -2,19 +2,37 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, LinearProgress } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
+import RectangleDrawing from './RectangleDrawing'
 
 const VideoUpload = ({ onUploadSuccess }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [modelName, setModelName] = useState('none');
+  const [uploaded, setUploaded] = useState(false);
+  const [roi, setRoi] = useState(null);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
+  const handleROIChange = (startPoint, endPoint) => {
+    setRoi({
+      'startPoint': startPoint,
+      'endPoint': endPoint
+    });
+  }
+
   const handleModelChange = (e) => {
     setModelName(e.target.value);
   };
+
+  const handelResetClick = (e) => {
+    setFile(null);
+    setUploading(false);
+    setModelName('none');
+    setUploaded(false);
+    setRoi(null);
+  }
 
   const handleUpload = async () => {
     if (!file) return;
@@ -23,6 +41,10 @@ const VideoUpload = ({ onUploadSuccess }) => {
     const formData = new FormData();
     formData.append('video', file);
     formData.append('model', modelName);
+    formData.append('x1', roi.startPoint.x);
+    formData.append('y1', roi.startPoint.y);
+    formData.append('x2', roi.endPoint.x);
+    formData.append('y2', roi.endPoint.y);
 
     try {
       const response = await axios.post('http://localhost:8000/api/upload/', formData);
@@ -31,11 +53,12 @@ const VideoUpload = ({ onUploadSuccess }) => {
       console.error('Upload failed:', error);
     } finally {
       setUploading(false);
+      setUploaded(true);
     }
   };
 
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
+    <div style={{ padding: '20px', margin: 'auto', textAlign: 'center' }}>
       <input
         accept="video/*"
         style={{ display: 'none' }}
@@ -43,19 +66,22 @@ const VideoUpload = ({ onUploadSuccess }) => {
         type="file"
         onChange={handleFileChange}
       />
-      <label htmlFor="raised-button-file">
+      <label htmlFor="raised-button-file" style={{margin: '10px'}}>
         <Button variant="contained" color="primary" component="span">
           <CloudUpload />
           <span style={{ marginLeft: '10px' }}>Select The Video</span>
         </Button>
       </label>
-      <div style={{ margin: '10px 0' }}>
+      <input type='text' disabled value={file?.name || ' '} style={{border: 'none', textAlign: 'center'}}/>
+      <div/>
+      <span>
         <select
           name='model-selection'
           className="select"
           value={modelName}
           onChange={handleModelChange}
           style={{
+            margin: '10px',
             padding: '10px',
             borderRadius: '5px',
             border: '1px solid #ccc',
@@ -65,12 +91,24 @@ const VideoUpload = ({ onUploadSuccess }) => {
           }}
         >
           <option selected hidden> Select The Model</option>
-          <option value="pretrained_e50">pretrained_e50</option>
-          <option value="non_pretrained_50">non_pretrained_50</option>
-          <option value="preprocessed_pretrained_e50">preprocessed_pretrained_e50</option>
+          <option value="pretrained">Pretrained</option>
+          <option value="non_pretrained_50">Non-Pretrained</option>
+          <option value="preprocessed_pretrained_e50">Preprocessed Pretrained</option>
         </select>
-      </div>
-      {file && modelName !== 'none' &&(
+      </span>
+      <label htmlFor="reset-button" style={{margin: '10px'}}>
+        <Button variant="contained" component="span" onClick={handelResetClick}>
+            <CloudUpload />
+            <span style={{ marginRight: '20px', marginLeft: '20px'}}>Reset</span>
+          </Button>
+      </label>
+      { file && !uploaded &&
+        <div style={{margin: '20px'}}>
+          <RectangleDrawing videoFile={file} onRectangleDrawn={handleROIChange}/>
+        </div>
+      }
+      <div/>
+      {file && roi &&modelName !== 'none'&& !uploading && !uploaded &&(
         <Button
           onClick={handleUpload}
           disabled={uploading}
