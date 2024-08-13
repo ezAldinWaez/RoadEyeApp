@@ -13,6 +13,6 @@
 # How to Run the App
 
 1. Run `cd C:\Redis` then `.\redis-server.exe` on the 1st terminal;
-2. Run `cd .\backenapp` then `celery -A backendapp worker --pool=solo -l info` on the 2nd terminal;
-3. Run `cd .\backenapp` then `daphne backendapp.asgi:application` on the 3rd terminal;
+2. Run `cd .\backendapp` then `celery -A backendapp worker --pool=solo -l info` on the 2nd terminal;
+3. Run `cd .\backendapp` then `daphne backendapp.asgi:application` on the 3rd terminal;
 4. Run `cd .\frontendapp` then `npm start` on the 4th terminal;
