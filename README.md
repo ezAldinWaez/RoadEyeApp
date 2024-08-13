@@ -3,7 +3,7 @@
 1. Download 'Redis-x64-5.0.14.1.zip' and extract it into 'C:\Redis';
 2. Run `git clone https://github.com/ezAldinWaez/RoadEyeApp.git` then `cd .\RoadEyeApp`;
 4. Create new Conda enviroment and activate it;
-5. Run `conda install pytorch torchvision torchaudio cpuonly -c pytorch` then `conda install `;
+5. Run `conda install pytorch torchvision torchaudio cpuonly -c pytorch`;
 6. Run `conda install conda-forge::ultralytics anaconda::django conda-forge::celery conda-forge::djangorestframework conda-forge::django-cors-headers anaconda::redis`;
 7. Run `pip install channels-redis`;
 9. Run `python .\backendapp\manage.py makemigrations`;
