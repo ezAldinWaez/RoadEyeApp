@@ -1,18 +1,64 @@
-# How to First Start the App
+# RoadEyeApp
 
-1. Download 'Redis-x64-5.0.14.1.zip' and extract it into 'C:\Redis';
-2. Run `git clone https://github.com/ezAldinWaez/RoadEyeApp.git` then `cd .\RoadEyeApp`;
-4. Create new Conda enviroment and activate it;
-5. Run `conda install pytorch torchvision torchaudio cpuonly -c pytorch`;
-6. Run `conda install conda-forge::ultralytics anaconda::django conda-forge::celery conda-forge::djangorestframework conda-forge::django-cors-headers anaconda::redis`;
-7. Run `pip install channels-redis`;
-9. Run `python .\backendapp\manage.py makemigrations`;
-10. Run `python .\backendapp\manage.py migrate`;
-11. Run `cd .\frontend` then `npm install`.
+Full-stack web application for real-time road monitoring and analysis using computer vision.
 
-# How to Run the App
+## Features
 
-1. Run `cd C:\Redis` then `.\redis-server.exe` on the 1st terminal;
-2. Run `cd .\backendapp` then `celery -A backendapp worker --pool=solo -l info` on the 2nd terminal;
-3. Run `cd .\backendapp` then `daphne backendapp.asgi:application` on the 3rd terminal;
-4. Run `cd .\frontendapp` then `npm start` on the 4th terminal;
+- **Django REST API** with async video processing via Celery
+- **React Frontend** with interactive video upload and ROI selection
+- **Real-time Updates** via WebSocket (Django Channels)
+- **YOLOv8 Detection** with object tracking and motion analysis
+
+## Tech Stack
+
+- Backend: Django, Celery, Redis, Django Channels
+- Frontend: React
+- Computer Vision: YOLOv8, OpenCV, NumPy
+- Database: SQLite3
+
+## Quick Start
+
+### Backend
+
+```bash
+cd backendapp
+conda create -n roadeye python=3.10 && conda activate roadeye
+conda install pytorch torchvision torchaudio cpuonly -c pytorch
+conda install -c conda-forge ultralytics django celery djangorestframework django-cors-headers redis
+pip install channels-redis
+python manage.py migrate
+```
+
+### Run (4 terminals)
+
+1. `redis-server`
+2. `cd backendapp && celery -A backendapp worker --pool=solo`
+3. `cd backendapp && daphne backendapp.asgi:application`
+4. `cd frontendapp && npm install && npm start`
+
+## Project Structure
+
+```
+backendapp/
+├── video_processor/
+│   ├── models.py       # Video metadata
+│   ├── views.py        # Upload API
+│   ├── tasks.py        # Celery processing task
+│   └── consumers.py    # WebSocket for progress updates
+├── static/             # YOLO model files
+└── manage.py
+
+frontendapp/           # React app
+```
+
+## How It Works
+
+1. Upload video and select ROI (React frontend)
+2. Backend queues processing task (Celery)
+3. Worker detects & tracks objects in video
+4. Real-time progress via WebSocket
+5. Download processed video with annotations
+
+## Related
+
+[RoadEyeModel](https://github.com/ezAldinWaez/RoadEyeModel) - Model training
