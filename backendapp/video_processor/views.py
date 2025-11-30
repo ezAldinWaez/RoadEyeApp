@@ -63,5 +63,5 @@ class ModelsView(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request):
-        return Response({'models': [os.path.dirname('../static/models')]}, status=status.HTTP_202_ACCEPTED)
+        return Response({'models': [os.path.dirname('~/repos/github/ezAldinWaez/RoadEyeApp/backendapp/static/models')]}, status=status.HTTP_202_ACCEPTED)
         # return Response({'models': os.listdir('C:/Users/Mohammad_Ghannam/Desktop/RoadEyeApp/backendapp/static/models')}, status=status.HTTP_202_ACCEPTED)

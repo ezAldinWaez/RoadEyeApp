@@ -2,6 +2,17 @@
 
 Full-stack web application for real-time road monitoring and analysis using computer vision.
 
+## Screenshots
+
+### Upload and ROI Selection
+![Upload and ROI Selection](assets/upload-and-roi-selection.png)
+
+### Processing with Detection
+![Processing with Detection](assets/processing-with-detection.png)
+
+### Results Comparison
+![Results Comparison](assets/results-comparison.png)
+
 ## Features
 
 - **Django REST API** with async video processing via Celery

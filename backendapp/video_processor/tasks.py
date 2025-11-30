@@ -65,7 +65,7 @@ def process_video(self, file_path: str, video_id, model_name:str, roi_x1, roi_y1
         fps=capFps,
         frameSize=(capFrameWidth, capFrameHight))
 
-    model = YOLO(f"../static/models/{model_name}.pt")
+    model = YOLO(f"~/repos/github/ezAldinWaez/RoadEyeApp/backendapp/static/models/{model_name}.pt")
     # model = YOLO(f"C:/Users/Mohammad_Ghannam/Desktop/RoadEyeApp/backendapp/static/models/{model_name}.pt")
 
     count = 0
